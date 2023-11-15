@@ -1,0 +1,20 @@
+# main.py
+#:kivy 2.0
+
+BoxLayout:
+    orientation: 'vertical'
+    
+    Button:
+        text: 'Nouvelle partie'
+        on_release: app.start_new_game()
+
+    GridLayout:
+        padding: 
+        id: chessboard
+        cols: 8
+        rows: 8
+        row_default_width: 40
+
+    Button:
+        text: 'Quitter'
+        on_release: app.leave()
