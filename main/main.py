@@ -32,8 +32,14 @@ class Pion:
                 deplacements.append((self.position[0] + 2, self.position[1]))
 
         return deplacements
-    
-        
+
+class Fou:
+    def __init__(self, couleur, position, tableau):
+        self.couleur = couleur 
+        self.position = position
+        self.chessboard = tableau 
+
+    def deplacemements_possibles(self):
     
 class ChessGame:
     def __init__(self):
