@@ -4,7 +4,7 @@ class Fou:
         self.position = position
         self.chessboard = tableau 
 
-    def deplacemements_possibles(self):
+    def deplacements_possibles(self):
         
         deplacements = []
         x, y = self.position
@@ -15,33 +15,37 @@ class Fou:
         else :
             min = 65
             max = 90
-            
+        
         no = 1
         while (x - no >= 0 and y - no >= 0) and self.chessboard[x-no][y-no] == " ":
+            print("a")
             deplacements.append((x - no, y - no))
             no += 1
-        if min <= ord(self.chessboard[x-no][y-no]) <= max :
+        if (x - no >= 0 and y - no >= 0) and min <= ord(self.chessboard[x-no][y-no]) <= max :
             deplacements.append((x - no, y - no))
             
         ne = 1
-        while (x - ne >= 0 and y + ne < len(self.chessboard)) and self.chessboard[x-ne][y-ne] == " ":
+        while (x - ne >= 0 and y + ne <= 7) and self.chessboard[x-ne][y+ne] == " ":
+            print("b")
             deplacements.append((x - ne, y + ne))
             ne += 1
-        if min <= ord(self.chessboard[x-ne][y+ne]) <= max :
+        if (x - ne >= 0 and y + ne <= 7) and min <= ord(self.chessboard[x-ne][y+ne]) <= max :
             deplacements.append((x - ne, y + ne))
         
         so = 1
-        while (x + so < len(self.chessboard) and y - so >= 0) and self.chessboard[x+so][y-so] == " ":
+        while (x + so <= 7 and y - so >= 0) and self.chessboard[x+so][y-so] == " ":
+            print("c")
             deplacements.append((x + so, y - so))
             so += 1
-        if min <= ord(self.chessboard[x+so][y-so]) <= max :
+        if (x + so <= 7 and y - so >= 0) and min <= ord(self.chessboard[x+so][y-so]) <= max :
             deplacements.append((x + so, y - so))
         
         se = 1
-        while (x + se < len(self.chessboard) and y + se < len(self.chessboard)) and self.chessboard[x+so][y-so] == " ":
+        while (x + se <= 7 and y + se <= 7) and self.chessboard[x+se][y+se] == " ":
+            print("d")
             deplacements.append((x + se, y + se))
             se += 1
-        if min <= ord(self.chessboard[x+se][y+se]) <= max :
+        if (x + se <= 7 and y + se <= 7) and min <= ord(self.chessboard[x+se][y+se]) <= max:
             deplacements.append((x + se, y + se))
 
         return deplacements
