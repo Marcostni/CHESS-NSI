@@ -31,14 +31,14 @@ class Fou:
             deplacements.append((x - ne, y + ne))
         
         so = 1
-        while x + so < len(self.chessboard) and y - so >= 0:
+        while (x + so < len(self.chessboard) and y - so >= 0) and self.chessboard[x+so][y-so] == " ":
             deplacements.append((x + so, y - so))
             so += 1
         if min <= ord(self.chessboard[x+so][y-so]) <= max :
             deplacements.append((x + so, y - so))
         
         se = 1
-        while x + se < len(self.chessboard) and y + se < len(self.chessboard):
+        while (x + se < len(self.chessboard) and y + se < len(self.chessboard)) and self.chessboard[x+so][y-so] == " ":
             deplacements.append((x + se, y + se))
             se += 1
         if min <= ord(self.chessboard[x+se][y+se]) <= max :
