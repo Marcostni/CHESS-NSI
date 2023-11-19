@@ -5,6 +5,7 @@ from kivy.uix.button import Button
 
 from pion import Pion 
 from cavalier import Cavalier 
+from fou import Fou 
     
 class ChessGame:
     def __init__(self):
@@ -44,7 +45,7 @@ class ChessApp(App):
                     rgb_code = 255
                 else :
                     rgb_code = 0
-                button = Button(text=piece,font_size=32,color = [255,0,4,1],on_release=self.cell_clicked, background_color = [rgb_code, rgb_code, rgb_code, 1])
+                button = Button(x = row, y = col, text=piece,font_size=32,color = [255,0,4,1],on_release=self.cell_clicked, background_color = [rgb_code, rgb_code, rgb_code, 1])
                 self.chessboard.add_widget(button)
 
     def cell_clicked(self, instance):
@@ -70,9 +71,13 @@ class ChessApp(App):
                     self.chess_game.piece = Cavalier("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "C":
                     self.chess_game.piece = Cavalier("w", self.coordinates, self.chess_game.board)
+                elif self.letter == "f":
+                    self.chess_game.piece = Fou("b", self.coordinates, self.chess_game.board)
+                elif self.letter == "F":
+                    self.chess_game.piece = Fou("w", self.coordinates, self.chess_game.board)
                 self.possibility = self.chess_game.piece.deplacements_possibles()
                 self.position = self.coordinates
-                print(self.possibility)
+                print(self.possibility)                
             
         else :
             if self.coordinates in self.possibility:
