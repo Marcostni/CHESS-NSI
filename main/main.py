@@ -6,7 +6,7 @@ from kivy.uix.button import Button
 from pion import Pion 
 from cavalier import Cavalier 
 from fou import Fou 
-from tour import Tous
+from tour import Tour
     
 class ChessGame:
     def __init__(self):
@@ -77,13 +77,9 @@ class ChessApp(App):
                 elif self.letter == "F":
                     self.chess_game.piece = Fou("w", self.coordinates, self.chess_game.board)
                 elif self.letter == "t":
-                    self.chess_game.piece = Fou("b", self.coordinates, self.chess_game.board)
+                    self.chess_game.piece = Tour("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "T":
-                    self.chess_game.piece = Fou("w", self.coordinates, self.chess_game.board)
-                elif self.letter == "t":
-                    self.chess_game.piece = Fou("b", self.coordinates, self.chess_game.board)
-                elif self.letter == "T":
-                    self.chess_game.piece = Fou("w", self.coordinates, self.chess_game.board)
+                    self.chess_game.piece = Tour("w", self.coordinates, self.chess_game.board)
                     
                 self.possibility = self.chess_game.piece.deplacements_possibles()
                 self.position = self.coordinates
