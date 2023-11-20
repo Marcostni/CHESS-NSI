@@ -75,6 +75,11 @@ class ChessApp(App):
                     self.chess_game.piece = Fou("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "F":
                     self.chess_game.piece = Fou("w", self.coordinates, self.chess_game.board)
+                elif self.letter == "t":
+                    self.chess_game.piece = Fou("b", self.coordinates, self.chess_game.board)
+                elif self.letter == "T":
+                    self.chess_game.piece = Fou("w", self.coordinates, self.chess_game.board)
+                    
                 self.possibility = self.chess_game.piece.deplacements_possibles()
                 self.position = self.coordinates
                 print(self.possibility)                
