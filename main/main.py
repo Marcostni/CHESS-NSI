@@ -80,6 +80,10 @@ class ChessApp(App):
                     self.chess_game.piece = Tour("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "T":
                     self.chess_game.piece = Tour("w", self.coordinates, self.chess_game.board)
+                elif self.letter == "r":
+                    self.chess_game.piece = Roi("b", self.coordinates, self.chess_game.board)
+                elif self.letter == "R":
+                    self.chess_game.piece = Roi("w", self.coordinates, self.chess_game.board)
                     
                 self.possibility = self.chess_game.piece.deplacements_possibles()
                 self.position = self.coordinates
