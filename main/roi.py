@@ -6,28 +6,41 @@ class Roi:
 
     def deplacements_possibles(self):
         deplacements = []
-        if self.couleur == "w":
-            if self.position[1] + 1 <= 7:
-                if self.chessboard[self.position[0] - 1][self.position[1] + 1].islower() :
-                    deplacements.append((self.position[0] - 1, self.position[1] + 1))
-            if self.position[1] - 1 >= 0:
-                if self.chessboard[self.position[0] - 1][self.position[1] - 1].islower():
-                    deplacements.append((self.position[0] - 1, self.position[1] - 1))
-            if self.position[0] - 1 >= 0 and self.chessboard[self.position[0] - 1][self.position[1]] == " ":
-                deplacements.append((self.position[0] - 1, self.position[1]))
-            if self.position[0] == 6 and self.chessboard[self.position[0] - 2][self.position[1]] == " ":
-                deplacements.append((self.position[0] - 2, self.position[1]))
-        
-        elif self.couleur == "b":
-            if self.position[1] + 1 <= 7:
-                if self.chessboard[self.position[0] + 1][self.position[1] + 1].isupper() :
-                    deplacements.append((self.position[0] + 1, self.position[1] + 1))
-            if self.position[1] - 1 >= 0:
-                if self.chessboard[self.position[0] + 1][self.position[1] - 1].isupper():
-                    deplacements.append((self.position[0] + 1, self.position[1] - 1))
-            if self.position[0] + 1 <= 7 and self.chessboard[self.position[0] + 1][self.position[1]] == " ":
-                deplacements.append((self.position[0] + 1, self.position[1]))
-            if self.position[0] == 1 and self.chessboard[self.position[0] + 2][self.position[1]] == " ":
-                deplacements.append((self.position[0] + 2, self.position[1]))
 
+         def deplacements_possibles(self):
+        deplacements = []
+        x = self.position[0]
+        y = self.position[1]
+
+        if x > 0:
+            deplacements.append((x-1, y))
+        
+        # bas
+        if x < 7:
+            deplacements.append((x+1, y))
+        
+        # gauche
+        if y > 0:
+            deplacements.append((x, y-1))
+        
+        # droite
+        if y < 7:
+            deplacements.append((x, y+1))
+        
+        # haut gauche
+        if x > 0 and y > 0:
+            deplacements.append((x-1, y-1))
+        
+        # haut droite
+        if x > 0 and y < 7:
+            deplacements.append((x-1, y+1))
+        
+        # bas gauche
+        if x < 7 and y > 0:
+            deplacements.append((x+1, y-1))
+        
+        # bas droite
+        if x < 7 and y < 7:
+            deplacements.append((x+1, y+1))
+        
         return deplacements
