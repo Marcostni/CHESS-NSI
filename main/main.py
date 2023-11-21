@@ -7,6 +7,9 @@ from pion import Pion
 from cavalier import Cavalier 
 from fou import Fou 
 from tour import Tour
+from dame import Dame 
+from roi import Roi 
+
     
 class ChessGame:
     def __init__(self):
@@ -80,10 +83,15 @@ class ChessApp(App):
                     self.chess_game.piece = Tour("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "T":
                     self.chess_game.piece = Tour("w", self.coordinates, self.chess_game.board)
+                elif self.letter == "d":
+                    self.chess_game.piece = Dame("b", self.coordinates, self.chess_game.board)
+                elif self.letter == "D":
+                    self.chess_game.piece = Dame("w", self.coordinates, self.chess_game.board)
                 elif self.letter == "r":
                     self.chess_game.piece = Roi("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "R":
                     self.chess_game.piece = Roi("w", self.coordinates, self.chess_game.board)
+                
                     
                 self.possibility = self.chess_game.piece.deplacements_possibles()
                 self.position = self.coordinates
