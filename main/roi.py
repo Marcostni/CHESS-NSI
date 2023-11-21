@@ -7,8 +7,6 @@ class Roi:
     def deplacements_possibles(self):
         deplacements = []
 
-         def deplacements_possibles(self):
-        deplacements = []
         x = self.position[0]
         y = self.position[1]
 
