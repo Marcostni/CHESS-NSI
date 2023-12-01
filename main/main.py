@@ -2,7 +2,7 @@ import kivy
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
-from kivy.uix.screenmanager import ScreenManager, Screen
+
 
 from pion import Pion 
 from cavalier import Cavalier 
@@ -10,17 +10,6 @@ from fou import Fou
 from tour import Tour
 from dame import Dame 
 from roi import Roi 
-
-sm = ScreenManager()
-
-for i in range(2):
-    screen = Screen(name='Title %d' % i)
-    sm.add_widget(screen)
-
-sm.current = 'Title 2'
-
-
-
 
 class ChessGame:
     def __init__(self):
