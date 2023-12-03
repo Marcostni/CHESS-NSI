@@ -10,28 +10,7 @@ from fou import Fou
 from tour import Tour
 from dame import Dame 
 from roi import Roi 
-
-class ChessGame:
-    def __init__(self):
-        self.board = [
-            ['t', 'c', 'f', 'd', 'r', 'f', 'c', 't'],
-            ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-            ['T', 'C', 'F', 'D', 'R', 'F', 'C', 'T']
-        ]
-        self.current_player = "w"
-        self.piece = ""
-
-    def make_move(self, depart, arrivee):
-        self.board[depart[0]][depart[1]], self.board[arrivee[0]][arrivee[1]] = " ", self.board[depart[0]][depart[1]]
-        
-    def is_checkmate(self):
-        pass
-
+from chessgame import ChessGame
 class ChessApp(App):
     
     def build(self):
@@ -67,6 +46,7 @@ class ChessApp(App):
         
         if self.chess_game.piece == "":
             if (65<ord(self.letter)<90 and self.chess_game.current_player == "w") or (97<ord(self.letter)<122 and self.chess_game.current_player == "b"):
+
                 if self.letter == "p":
                     self.chess_game.piece = Pion("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "P":
@@ -91,21 +71,27 @@ class ChessApp(App):
                     self.chess_game.piece = Roi("b", self.coordinates, self.chess_game.board)
                 elif self.letter == "R":
                     self.chess_game.piece = Roi("w", self.coordinates, self.chess_game.board)
-                
-                    
                 self.possibility = self.chess_game.piece.deplacements_possibles()
                 self.position = self.coordinates
                 print(self.possibility)                
             
         else :
+            
             if self.coordinates in self.possibility:
                 self.chess_game.make_move(self.position, self.coordinates)
-                self.chessboard.clear_widgets()
-                self.create_chessboard()
-                if self.chess_game.current_player == "w" :
-                    self.chess_game.current_player = "b"
-                else:
-                    self.chess_game.current_player = "w"
+                pos_roi = self.chess_game.find_king()
+                if not self.chess_game.is_check(pos_roi):
+                    self.chessboard.clear_widgets()
+                    self.create_chessboard()
+                    if self.chess_game.current_player == "w" :
+                        self.chess_game.current_player = "b"
+                    else:
+                        self.chess_game.current_player = "w"
+                    if self.chess_game.is_checkmate():
+                        print("checkmate")
+                else :
+                    self.chess_game.undo_moove(self.coordinates, self.position)
+                
             self.chess_game.piece = ""
 
     def start_new_game(self):
