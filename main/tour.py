@@ -10,7 +10,7 @@ class Tour:
         for i in range(self.position[0] - 1, -1, -1):
             if self.chessboard[i][self.position[1]] == " ":
                 deplacements.append((i, self.position[1]))
-            elif self.chessboard[i][self.position[1]].islower() != self.chessboard[self.position[0][self.position[1]].islower():
+            elif self.chessboard[i][self.position[1]].islower() != self.chessboard[self.position[0]][self.position[1]].islower():
                 deplacements.append((i, self.position[1]))
                 break
             else:
@@ -19,7 +19,7 @@ class Tour:
         for i in range(self.position[0] + 1, 8):
             if self.chessboard[i][self.position[1]] == " ":
                 deplacements.append((i, self.position[1]))
-            elif self.chessboard[i][self.position[1]].islower() != self.chessboard[self.position[0][self.position[1]].islower():
+            elif self.chessboard[i][self.position[1]].islower() != self.chessboard[self.position[0]][self.position[1]].islower():
                 deplacements.append((i, self.position[1]))
                 break
             else:
@@ -28,7 +28,7 @@ class Tour:
         for j in range(self.position[1] - 1, -1, -1):
             if self.chessboard[self.position[0]][j] == " ":
                 deplacements.append((self.position[0], j))
-            elif self.chessboard[self.position[0]][j].islower() != self.chessboard[self.position[0][self.position[1]].islower():
+            elif self.chessboard[self.position[0]][j].islower() != self.chessboard[self.position[0]][self.position[1]].islower():
                 deplacements.append((self.position[0], j))
                 break
             else:
@@ -37,7 +37,7 @@ class Tour:
         for j in range(self.position[1] + 1, 8):
             if self.chessboard[self.position[0]][j] == " ":
                 deplacements.append((self.position[0], j))
-            elif self.chessboard[self.position[0]][j].islower() != self.chessboard[self.position[0][self.position[1]].islower():
+            elif self.chessboard[self.position[0]][j].islower() != self.chessboard[self.position[0]][self.position[1]].islower():
                 deplacements.append((self.position[0], j))
                 break
             else:
