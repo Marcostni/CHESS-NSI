@@ -11,6 +11,7 @@ from tour import Tour
 from dame import Dame 
 from roi import Roi 
 from chessgame import ChessGame
+
 class ChessApp(App):
     
     def build(self):
