@@ -8,14 +8,16 @@ BoxLayout:
     Button:
         text: 'Nouvelle partie'
         on_release: app.start_new_game()
+        size_hint : (1, 0.2)
 
     GridLayout:
         padding: 
         id: chessboard
         cols: 8
         rows: 8
-        row_default_width: 40
+        keep_ratio : True
 
     Button:
         text: 'Quitter'
         on_release: app.leave()
+        size_hint : (1, 0.2)
