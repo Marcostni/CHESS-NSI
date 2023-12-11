@@ -17,6 +17,21 @@ class ChessApp(App):
     def build(self):
         self.chess_game = ChessGame()
         self.chessboard = self.root.ids.chessboard
+        self.dico = {
+            "p" : "ressources/bpion",
+            "P" : "ressources/wpion", 
+            "f" : "ressources/bfou",
+            "F" : "ressources/wfou",
+            "c" : "ressources/bcavalier",
+            "C" : "ressources/wcavalier",
+            "t" : "ressources/btour",
+            "T" : "ressources/wtour",
+            "d" : "ressources/bdame",
+            "D" : "ressources/wdame",
+            "r" : "ressources/broi",
+            "R" : "ressources/wroi",
+            " " : "ressources/"
+        }
         self.create_chessboard()
         return self.root
 
@@ -25,11 +40,12 @@ class ChessApp(App):
         for row in range(8):
             for col in range(8):
                 piece = self.chess_game.board[row][col]
+                image = self.dico[piece]
                 if (col + row) % 2 == 0:
-                    rgb_code = 255
+                    image += "w.png"
                 else :
-                    rgb_code = 0
-                button = Button(x = row, y = col, text=piece,font_size=32,color = [255,0,4,1],on_release=self.cell_clicked, background_color = [rgb_code, rgb_code, rgb_code, 1])
+                    image += "b.png"
+                button = Button(x = row, y = col, text=piece,font_size=32,color = [255,0,4,0],on_release=self.cell_clicked, background_normal = image)
                 self.chessboard.add_widget(button)
 
     def cell_clicked(self, instance):
