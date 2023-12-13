@@ -3,7 +3,6 @@ from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 
-
 from pion import Pion 
 from cavalier import Cavalier 
 from fou import Fou 
@@ -17,6 +16,7 @@ class ChessApp(App):
     def build(self):
         self.chess_game = ChessGame()
         self.chessboard = self.root.ids.chessboard
+        self.label = self.root.ids.label
         self.dico = {
             "p" : "ressources/bpion",
             "P" : "ressources/wpion", 
@@ -102,10 +102,16 @@ class ChessApp(App):
                     self.create_chessboard()
                     if self.chess_game.current_player == "w" :
                         self.chess_game.current_player = "b"
+                        self.label.text = "C'est aux noirs de jouer"
                     else:
                         self.chess_game.current_player = "w"
+                        self.label.text = "C'est aux blancs de jouer"
                     if self.chess_game.is_checkmate():
                         print("checkmate")
+                        if self.chess_game.current_player == "w" :
+                            self.label.text = "Echec et mat. Les noirs ont gagné."
+                        else:
+                            self.label.text = "Echec et mat. Les blancs ont gagné."
                 else :
                     self.chess_game.undo_moove(self.coordinates, self.position)
                 
@@ -115,6 +121,7 @@ class ChessApp(App):
         self.chess_game = ChessGame()
         self.chessboard.clear_widgets()
         self.create_chessboard()
+        self.label.text = "C'est aux blancs de jouer"
 
     def leave(self):
         App.get_running_app().stop()
