@@ -4,20 +4,27 @@
 
 BoxLayout:
     orientation: 'vertical'
-    
+
     Button:
-        text: 'Nouvelle partie'
+        text: ''
         on_release: app.start_new_game()
-        size_hint : (1, 0.2)
+        size_hint : (0.7, 0.3)
+        background_normal : 'ressources/upbutton.png'
+        background_down : 'ressources/downbutton.png'
+        pos_hint : {'x': 0.15, 'y': 0.01}
 
     GridLayout:
-        padding: 
         id: chessboard
         cols: 8
         rows: 8
-        keep_ratio : True
+        size_hint : (0.9, 0.5)
+        pos_hint : {'x': 0.05, 'y': 0.2}
 
-    Button:
-        text: 'Quitter'
-        on_release: app.leave()
-        size_hint : (1, 0.2)
+    
+    Label:
+        id : label 
+        text: "C'est aux blancs de jouer"
+        size_hint : (0.2, 0.2)
+        pos_hint : {'x': 0.40}
+        background_normal : ""
+        background_color : (1, 0, 0, 0.50)
