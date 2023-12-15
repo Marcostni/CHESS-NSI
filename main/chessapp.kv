@@ -1,30 +1,73 @@
-# main.py
 #:kivy 2.0
-
 
 BoxLayout:
     orientation: 'vertical'
 
+    Label:
+        text: ''
+        size_hint : (None, None)
+        size : (80, 80)
+
     Button:
         text: ''
         on_release: app.start_new_game()
-        size_hint : (0.7, 0.3)
-        background_normal : 'ressources/upbutton.png'
-        background_down : 'ressources/downbutton.png'
-        pos_hint : {'x': 0.15, 'y': 0.01}
+        size_hint : (None, None)
+        size : (256, 20)
+        pos_hint : {'center_x': 0.5}
+        background_normal : 'ressources/newgameup.png'
+        background_down : 'ressources/newgamedown.png'
+    
+    Label:
+        text: ''
+        size_hint : (None, None)
+        size : (20, 20)
 
-    GridLayout:
-        id: chessboard
-        cols: 8
-        rows: 8
-        size_hint : (0.9, 0.5)
-        pos_hint : {'x': 0.05, 'y': 0.2}
+    
+    Button:
+        text: ''
+        on_release: app.leave()
+        size_hint : (None, None)
+        size : (256, 20)
+        pos_hint : {'center_x': 0.5}
+        background_normal : 'ressources/quitterup.png'
+        background_down : 'ressources/quitterdown.png'
+        
+
+
+    BoxLayout:
+        orientation : 'horizontal'
+        size_hint : (None, None)
+        size: (296,296)
+        pos_hint : {'center_x': 0.5}
+
+        Label:
+            text: "99"
+            size_hint: (None, None)
+            size : (40, 492)
+
+
+
+        GridLayout:
+            size : (256, 256)
+            id: chessboard
+            cols: 8
+            rows: 8
+            size_hint : (None, None)
+
+        
+        Label:
+            text: "99"
+            size_hint: (None, None)
+            size : (40, 20)
+
+            
+
 
     
     Label:
         id : label 
         text: "C'est aux blancs de jouer"
         size_hint : (0.2, 0.2)
-        pos_hint : {'x': 0.40}
+        pos_hint : {'center_x': 0.5}
         background_normal : ""
         background_color : (1, 0, 0, 0.50)
