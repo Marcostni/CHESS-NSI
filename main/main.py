@@ -2,6 +2,7 @@ import kivy
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
+from kivy.config import Config
 
 from pion import Pion 
 from cavalier import Cavalier 
@@ -125,6 +126,9 @@ class ChessApp(App):
 
     def leave(self):
         App.get_running_app().stop()
-    
+
+Config.set('graphics', 'width', '600') 
+Config.set('graphics', 'height', '700')
+
 if __name__ == '__main__':
     ChessApp().run()
