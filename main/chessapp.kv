@@ -32,20 +32,17 @@ BoxLayout:
         background_normal : 'ressources/quitterup.png'
         background_down : 'ressources/quitterdown.png'
         
-
-
     BoxLayout:
         orientation : 'horizontal'
         size_hint : (None, None)
-        size: (296,296)
+        size: (336,296)
         pos_hint : {'center_x': 0.5}
 
         Label:
-            text: "99"
+            id: lbl_pnt_b
+            text: "0"
             size_hint: (None, None)
             size : (40, 492)
-
-
 
         GridLayout:
             size : (256, 256)
@@ -53,17 +50,13 @@ BoxLayout:
             cols: 8
             rows: 8
             size_hint : (None, None)
-
-        
+   
         Label:
-            text: "99"
+            id: lbl_pnt_w
+            text: "0"
             size_hint: (None, None)
             size : (40, 20)
 
-            
-
-
-    
     Label:
         id : label 
         text: "C'est aux blancs de jouer"
