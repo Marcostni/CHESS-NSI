@@ -55,6 +55,28 @@ class ChessApp(App):
                     image += "b.png"
                 button = Button(x = row, y = col, text=piece,font_size=32,color = [255,0,4,0],on_release=self.cell_clicked, background_normal = image)
                 self.chessboard.add_widget(button)
+    
+    def new_turn(self):
+        self.chessboard.clear_widgets()
+        self.create_chessboard()
+        if self.chess_game.current_player == "w" :
+            self.chess_game.current_player = "b"
+            self.label.text = "C'est aux noirs de jouer"
+        else:
+            self.chess_game.current_player = "w"
+            self.label.text = "C'est aux blancs de jouer"
+        if self.chess_game.is_checkmate():
+            if self.chess_game.current_player == "w" :
+                self.label.text = "Echec et mat. Les noirs ont gagné."
+            else:
+                self.label.text = "Echec et mat. Les blancs ont gagné."
+        elif self.chess_game.is_pat():
+            if self.chess_game.current_player == "w" :
+                self.label.text = "PAT !!! Les blancs ne peuvent plus bouger. Egalité."
+            else:
+                self.label.text = "PAT !!! Les noirs ne peuvent plus bouger. Egalité."
+        self.lbl_pnt_b.text = str(self.chess_game.pnts_b)
+        self.lbl_pnt_w.text = str(self.chess_game.pnts_w)
 
     def cell_clicked(self, instance):
 
@@ -102,7 +124,6 @@ class ChessApp(App):
                 if self.letter == "r" or self.letter == "R":
                     self.roi = self.letter
 
-
         else :
             
             if self.coordinates in self.possibility:
@@ -123,21 +144,7 @@ class ChessApp(App):
                         self.grw = False
                     elif self.position == (7,7):
                         self.prw = False
-                    self.chessboard.clear_widgets()
-                    self.create_chessboard()
-                    if self.chess_game.current_player == "w" :
-                        self.chess_game.current_player = "b"
-                        self.label.text = "C'est aux noirs de jouer"
-                    else:
-                        self.chess_game.current_player = "w"
-                        self.label.text = "C'est aux blancs de jouer"
-                    if self.chess_game.is_checkmate():
-                        if self.chess_game.current_player == "w" :
-                            self.label.text = "Echec et mat. Les noirs ont gagné."
-                        else:
-                            self.label.text = "Echec et mat. Les blancs ont gagné."
-                    self.lbl_pnt_b.text = str(self.chess_game.pnts_b)
-                    self.lbl_pnt_w.text = str(self.chess_game.pnts_w)
+                    self.new_turn()
                 else :
                     self.chess_game.undo_moove(self.coordinates, self.position)
 
@@ -153,21 +160,7 @@ class ChessApp(App):
                                         self.chess_game.make_move(self.coordinates,(self.position[0], self.position[1] - 1))
                                         self.prb = False
                                         self.grb = False
-                                        self.chessboard.clear_widgets()
-                                        self.create_chessboard()
-                                        if self.chess_game.current_player == "w" :
-                                            self.chess_game.current_player = "b"
-                                            self.label.text = "C'est aux noirs de jouer"
-                                        else:
-                                            self.chess_game.current_player = "w"
-                                            self.label.text = "C'est aux blancs de jouer"
-                                        if self.chess_game.is_checkmate():
-                                            if self.chess_game.current_player == "w" :
-                                                self.label.text = "Echec et mat. Les noirs ont gagné."
-                                            else:
-                                                self.label.text = "Echec et mat. Les blancs ont gagné."
-                                        self.lbl_pnt_b.text = str(self.chess_game.pnts_b)
-                                        self.lbl_pnt_w.text = str(self.chess_game.pnts_w)
+                                        self.new_turn()
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] - 2),(self.position[0], self.position[1] - 1))
                                 else:
@@ -183,21 +176,7 @@ class ChessApp(App):
                                         self.chess_game.make_move(self.coordinates,(self.position[0], self.position[1] + 1))
                                         self.prb = False
                                         self.grb = False
-                                        self.chessboard.clear_widgets()
-                                        self.create_chessboard()
-                                        if self.chess_game.current_player == "w" :
-                                            self.chess_game.current_player = "b"
-                                            self.label.text = "C'est aux noirs de jouer"
-                                        else:
-                                            self.chess_game.current_player = "w"
-                                            self.label.text = "C'est aux blancs de jouer"
-                                        if self.chess_game.is_checkmate():
-                                            if self.chess_game.current_player == "w" :
-                                                self.label.text = "Echec et mat. Les noirs ont gagné."
-                                            else:
-                                                self.label.text = "Echec et mat. Les blancs ont gagné."
-                                        self.lbl_pnt_b.text = str(self.chess_game.pnts_b)
-                                        self.lbl_pnt_w.text = str(self.chess_game.pnts_w)
+                                        self.new_turn()
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] + 2),(self.position[0], self.position[1] + 1))
                                 else:
@@ -213,19 +192,7 @@ class ChessApp(App):
                                         self.chess_game.make_move(self.coordinates,(self.position[0], self.position[1] + 1))
                                         self.prw = False
                                         self.grw = False
-                                        self.chessboard.clear_widgets()
-                                        self.create_chessboard()
-                                        if self.chess_game.current_player == "w" :
-                                            self.chess_game.current_player = "b"
-                                            self.label.text = "C'est aux noirs de jouer"
-                                        else:
-                                            self.chess_game.current_player = "w"
-                                            self.label.text = "C'est aux blancs de jouer"
-                                        if self.chess_game.is_checkmate():
-                                            if self.chess_game.current_player == "w" :
-                                                self.label.text = "Echec et mat. Les noirs ont gagné."
-                                            else:
-                                                self.label.text = "Echec et mat. Les blancs ont gagné."
+                                        self.new_turn()
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] + 2),(self.position[0], self.position[1] + 1))
                                 else:
@@ -241,19 +208,7 @@ class ChessApp(App):
                                         self.chess_game.make_move(self.coordinates,(self.position[0], self.position[1] - 1))
                                         self.prw = False
                                         self.grw = False
-                                        self.chessboard.clear_widgets()
-                                        self.create_chessboard()
-                                        if self.chess_game.current_player == "w" :
-                                            self.chess_game.current_player = "b"
-                                            self.label.text = "C'est aux noirs de jouer"
-                                        else:
-                                            self.chess_game.current_player = "w"
-                                            self.label.text = "C'est aux blancs de jouer"
-                                        if self.chess_game.is_checkmate():
-                                            if self.chess_game.current_player == "w" :
-                                                self.label.text = "Echec et mat. Les noirs ont gagné."
-                                            else:
-                                                self.label.text = "Echec et mat. Les blancs ont gagné."
+                                        self.new_turn()
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] - 2),(self.position[0], self.position[1] - 1))
                                 else:
