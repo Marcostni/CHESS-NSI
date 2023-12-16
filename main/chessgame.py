@@ -19,32 +19,35 @@ class ChessGame:
         ]
         self.current_player = "w"
         self.piece = ""
-        self.prw = True 
-        self.grw = True
-        self.prb = True 
-        self.grb = True
+        self.pnts_w = 0
+        self.pnts_b = 0
+        self.dico = {
+            "d": 9,
+            "t": 5,
+            "f": 3,
+            "c": 3,
+            "p": 1,
+            " ": 0
+        }
 
     def make_move(self, depart, arrivee):
         if depart != arrivee:
-            if self.board[depart[0]][depart[1]] == "r":
-                self.prb = False
-                self.grb = False
-            elif self.board[depart[0]][depart[1]] == "R":
-                self.prw = False
-                self.grw = False
-            elif depart == (0,0):
-                self.grb = False
-            elif depart == (0,7):
-                self.prb = False
-            elif depart == (7,0):
-                self.grw = False
-            elif depart == (7,7):
-                self.prw = False
+            
             self.piece_effacee = self.board[arrivee[0]][arrivee[1]]
+            if self.board[arrivee[0]][arrivee[1]].islower():
+                self.pnts_w += self.dico[self.board[arrivee[0]][arrivee[1]]]
+            else:
+                self.pnts_b += self.dico[(self.board[arrivee[0]][arrivee[1]]).lower()]
+
             self.board[depart[0]][depart[1]], self.board[arrivee[0]][arrivee[1]] = " ", self.board[depart[0]][depart[1]]
         
     def undo_moove(self, depart, arrivee):
         if depart != arrivee:
+            if self.piece_effacee.islower():
+                self.pnts_w -= self.dico[self.piece_effacee]
+            else:
+                self.pnts_b -= self.dico[(self.piece_effacee).lower()]
+
             self.board[depart[0]][depart[1]], self.board[arrivee[0]][arrivee[1]] = self.piece_effacee, self.board[depart[0]][depart[1]]
             self.piece_effacee = " "
         
