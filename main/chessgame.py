@@ -154,3 +154,19 @@ class ChessGame:
                                     return False
                                 self.undo_moove(deplacements, self.coordinates_piece_alliee)
             return True
+
+    def is_pat(self):
+        pos_roi = self.find_king()
+        if self.board[pos_roi[0]][pos_roi[1]].islower():
+            roi = Roi("b", pos_roi, self.board)
+        else:
+            roi = Roi("w", pos_roi, self.board)
+        deplacements_possibles = roi.deplacements_possibles()
+        for deplacements in deplacements_possibles:
+            self.make_move(pos_roi, deplacements)
+            if not self.is_check(deplacements):
+                self.undo_moove(deplacements, pos_roi)
+                return False
+            else:
+                self.undo_moove(deplacements, pos_roi)
+        return True
