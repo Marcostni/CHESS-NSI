@@ -1,3 +1,4 @@
+from kivy.uix.button import Button
 from pion import Pion 
 from cavalier import Cavalier 
 from fou import Fou 
@@ -27,7 +28,8 @@ class ChessGame:
             "f": 3,
             "c": 3,
             "p": 1,
-            " ": 0
+            " ": 0,
+            "r": 999999999999
         }
 
     def make_move(self, depart, arrivee):
@@ -41,7 +43,7 @@ class ChessGame:
 
             self.board[depart[0]][depart[1]], self.board[arrivee[0]][arrivee[1]] = " ", self.board[depart[0]][depart[1]]
         
-    def undo_moove(self, depart, arrivee):
+    def undo_move(self, depart, arrivee):
         if depart != arrivee:
             if self.piece_effacee.islower():
                 self.pnts_w -= self.dico[self.piece_effacee]
@@ -102,7 +104,7 @@ class ChessGame:
     def launch_is_check(self, depart, arrivee):
         self.make_move(depart, arrivee)
         verif = self.is_check(arrivee)
-        self.undo_moove(arrivee, depart)
+        self.undo_move(arrivee, depart)
         return verif
     
     def is_checkmate(self):
@@ -150,9 +152,9 @@ class ChessGame:
                                 self.make_move(self.coordinates_piece_alliee, deplacements)
                                 if not self.is_check(pos_roi):
                                     print("pas mat")
-                                    self.undo_moove(deplacements, self.coordinates_piece_alliee)
+                                    self.undo_move(deplacements, self.coordinates_piece_alliee)
                                     return False
-                                self.undo_moove(deplacements, self.coordinates_piece_alliee)
+                                self.undo_move(deplacements, self.coordinates_piece_alliee)
             return True
 
     def is_pat(self):
@@ -165,8 +167,49 @@ class ChessGame:
         for deplacements in deplacements_possibles:
             self.make_move(pos_roi, deplacements)
             if not self.is_check(deplacements):
-                self.undo_moove(deplacements, pos_roi)
+                self.undo_move(deplacements, pos_roi)
                 return False
             else:
-                self.undo_moove(deplacements, pos_roi)
+                self.undo_move(deplacements, pos_roi)
+                
+        for lignes in range(len(self.board)):
+                for col in range(len(self.board[0])):
+                    self.coordinates_piece_alliee = (lignes, col)
+                    if self.board[lignes][col].islower() == self.board[pos_roi[0]][pos_roi[1]].islower():
+                        if self.board[lignes][col] == " ":
+                            self.piece = False
+                        elif self.current_player == "b":
+                            if self.board[lignes][col] == "p":
+                                self.piece = Pion("b", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "c":
+                                self.piece = Cavalier("b", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "f":
+                                self.piece = Fou("b", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "t":
+                                self.piece = Tour("b", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "d":
+                                self.piece = Dame("b", self.coordinates_piece_alliee, self.board)
+                                
+                        elif self.current_player == "w":
+                            if self.board[lignes][col] == "P":
+                                self.piece = Pion("w", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "C":
+                                self.piece = Cavalier("w", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "F":
+                                self.piece = Fou("w", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "T":
+                                self.piece = Tour("w", self.coordinates_piece_alliee, self.board)
+                            elif self.board[lignes][col] == "D":
+                                self.piece = Dame("w", self.coordinates_piece_alliee, self.board)
+                        
+                        if self.piece:
+                            for deplacements in self.piece.deplacements_possibles():
+                                self.make_move(self.coordinates_piece_alliee, deplacements)
+                                pos_roi = self.find_king()
+                                if self.is_check(pos_roi):
+                                    self.undo_move(deplacements, self.coordinates_piece_alliee)
+                                    
+                                else:
+                                    self.undo_move(deplacements, self.coordinates_piece_alliee)
+                                    return False
         return True
