@@ -78,6 +78,44 @@ class ChessApp(App):
         self.lbl_pnt_b.text = str(self.chess_game.pnts_b)
         self.lbl_pnt_w.text = str(self.chess_game.pnts_w)
 
+    def promotion_clicked(self, instance):
+        self.letter_promotion = instance.text
+        for row in range(8):
+            for col in range(8):
+                button = self.chessboard.children[row * 8 + col]
+                if button is instance:
+                    self.coordinates_prom = (7 - row,7 - col)
+                    break
+        if self.letter != " ":
+            
+            if self.chess_game.current_player == "w":
+                self.chess_game.board[0][self.coordinates_prom[1]] = self.letter_promotion
+            else:
+                self.chess_game.board[7][self.coordinates_prom[1]] = self.letter_promotion
+            self.new_turn()
+         
+    
+    def promotion(self, col):
+        self.chess_game.tab = [[" " for x in range(8) ]for y in range(8)]
+        self.chess_game.pieces_prom = ["d", "t", "c", "f"]
+        if self.chess_game.current_player == "w":
+            for i in range(4):
+                self.chess_game.tab[i][col] = self.chess_game.pieces_prom[i].upper()
+        else:
+            for i in range(7, 3, -1):
+                self.chess_game.tab[i][col] = self.chess_game.pieces_prom[i-4]
+        self.chessboard.clear_widgets()
+        for row in range(8):
+            for col in range(8):
+                piece = self.chess_game.tab[row][col]
+                image = self.dico[piece]
+                if (col + row) % 2 == 0:
+                    image += "w.png"
+                else :
+                    image += "b.png"
+                button = Button(x = row, y = col, text=piece,font_size=32,color = [255,0,4,0],on_release=self.promotion_clicked, background_normal = image)
+                self.chessboard.add_widget(button)
+
     def cell_clicked(self, instance):
 
         self.letter = instance.text
@@ -123,6 +161,12 @@ class ChessApp(App):
                 print(self.possibility)
                 if self.letter == "r" or self.letter == "R":
                     self.roi = self.letter
+                else:
+                    self.roi = ""
+                if self.letter == "p" or self.letter == "P":
+                    self.pion = self.letter
+                else:
+                    self.roi = ""
 
         else :
             
@@ -144,9 +188,16 @@ class ChessApp(App):
                         self.grw = False
                     elif self.position == (7,7):
                         self.prw = False
-                    self.new_turn()
+                    print(self.letter)
+                    if self.pion == "p" and self.coordinates[0] == 7:
+                        self.promotion(self.coordinates[1])
+                        self.pion = ""
+                    elif self.pion == "P" and self.coordinates[0] == 0:
+                        self.promotion(self.coordinates[1])
+                    else:
+                        self.new_turn()
                 else :
-                    self.chess_game.undo_moove(self.coordinates, self.position)
+                    self.chess_game.undo_move(self.coordinates, self.position)
 
             elif self.roi:
                 if not self.chess_game.is_check(self.position):
@@ -164,7 +215,7 @@ class ChessApp(App):
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] - 2),(self.position[0], self.position[1] - 1))
                                 else:
-                                    self.chess_game.undo_moove((self.position[0], self.position[1] - 1), self.position)
+                                    self.chess_game.undo_move((self.position[0], self.position[1] - 1), self.position)
 
                     elif self.coordinates == (0, 7) and self.roi.islower():
                         if self.prb:
@@ -180,7 +231,7 @@ class ChessApp(App):
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] + 2),(self.position[0], self.position[1] + 1))
                                 else:
-                                    self.chess_game.undo_moove((self.position[0], self.position[1] + 1), self.position)
+                                    self.chess_game.undo_move((self.position[0], self.position[1] + 1), self.position)
 
                     elif self.coordinates == (7, 7) and not self.roi.islower():
                         if self.prw:
@@ -196,7 +247,7 @@ class ChessApp(App):
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] + 2),(self.position[0], self.position[1] + 1))
                                 else:
-                                    self.chess_game.undo_moove((self.position[0], self.position[1] + 1), self.position)
+                                    self.chess_game.undo_move((self.position[0], self.position[1] + 1), self.position)
 
                     elif self.coordinates == (7, 0) and not self.roi.islower():
                         if self.grw:
@@ -212,9 +263,10 @@ class ChessApp(App):
                                     else:
                                         self.chess_game.undo_move((self.position[0], self.position[1] - 2),(self.position[0], self.position[1] - 1))
                                 else:
-                                    self.chess_game.undo_moove((self.position[0], self.position[1] - 1), self.position)
+                                    self.chess_game.undo_move((self.position[0], self.position[1] - 1), self.position)
 
                 self.roi = ""
+            
             self.chess_game.piece = ""
 
     def start_new_game(self):
