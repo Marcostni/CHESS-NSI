@@ -161,12 +161,9 @@ class ChessApp(App):
                 print(self.possibility)
                 if self.letter == "r" or self.letter == "R":
                     self.roi = self.letter
-                else:
-                    self.roi = ""
+                    
                 if self.letter == "p" or self.letter == "P":
                     self.pion = self.letter
-                else:
-                    self.roi = ""
 
         else :
             
@@ -194,6 +191,7 @@ class ChessApp(App):
                         self.pion = ""
                     elif self.pion == "P" and self.coordinates[0] == 0:
                         self.promotion(self.coordinates[1])
+                        self.pion = ""
                     else:
                         self.new_turn()
                 else :
@@ -265,8 +263,8 @@ class ChessApp(App):
                                 else:
                                     self.chess_game.undo_move((self.position[0], self.position[1] - 1), self.position)
 
-                self.roi = ""
-            
+            self.roi = ""
+            self.pion = ""            
             self.chess_game.piece = ""
 
     def start_new_game(self):
